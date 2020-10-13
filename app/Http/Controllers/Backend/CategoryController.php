@@ -53,7 +53,7 @@ class CategoryController extends Controller
         $category->desc = $request->desc; 
         $category->parent_id = $request->parent_id; 
 
-        if ( $request->image ){
+        if ( !empty($request->image) ){
             $image =$request->file('image');
             $img = time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('backend/img/categories/'.$img);

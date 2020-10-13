@@ -52,7 +52,7 @@ class BrandController extends Controller
         $brand->name = $request->name; 
         $brand->desc = $request->desc; 
 
-        if ( $request->image ){
+        if ( !empty($request->image) ){
             $image =$request->file('image');
             $img = time() . '.' . $image->getClientOriginalExtension();
             $location = public_path('backend/img/brands/'.$img);

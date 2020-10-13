@@ -29,6 +29,7 @@
 
                 <li class="nav-header">Product Management</li>
                
+                {{-- brand  --}}
                 <li class="nav-item">
                     <a href="{{ route('brands.manage')}}" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
@@ -52,6 +53,8 @@
                         </li>
                     </ul>
                 </li>
+
+                {{-- category  --}}
                 <li class="nav-item">
                     <a href="{{ route('category.manage')}}" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
@@ -75,6 +78,35 @@
                         </li>
                     </ul>
                 </li>
+
+                {{-- product  --}}
+                <li class="nav-item">
+                    <a href="{{ route('product.manage')}}" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Products
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('product.create')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create Product</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('product.manage')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage Products</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

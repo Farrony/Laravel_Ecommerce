@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Manage All Categories</h1>
+                    <h1 class="m-0">Manage All Products</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Manage Categories</li>
+                        <li class="breadcrumb-item active">Manage Products</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -27,7 +27,7 @@
                 <div class="col-md-12">
                     <div class="card card-outline card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">All Category List</h3>
+                            <h3 class="card-title">All Product List</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -38,56 +38,71 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-striped table-responsive-md">
+                            <table class="table table-striped table-responsive">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">#Sl.</th>
-                                        <th scope="col">Category Name</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">Parent Category</th>
+                                        <th scope="col">Thumbnail</th>
+                                        <th scope="col">Product Title</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Brand</th>
+                                        <th scope="col">Status </th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Offer Price</th>
+                                        <th scope="col">Quantity</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                    $i=1;
-                                    @endphp
-                                    @foreach ($categories as $category)
+                                    @php $i=1;  @endphp
+                                    @foreach ($products as $product)
                                     <tr>
                                         <th scope="row">{{ $i }}</th>
-                                        <td>{{ $category->name }}</td>
-                                        <td>{{ $category->desc }}</td>
                                         <td>
-                                            @if ( $category->image == NULL)
-                                            No Image Uploaded
+                                            @php $j=1; @endphp
+                                            @foreach($product->images as $img)
+                                                @if( $img->image == NULL)
+                                                    No Thumbnail
+                                                @elseif( $j > 0 )
+                                                <img src="{{asset('backend/img/products/' . $img->image )}}" alt="" width="75">
+                                                @endif
+                                                @php $j--; @endphp
+                                            @endforeach
+                                        </td>
+                                        <td>{{ $product->title }}</td>
+                                        <td>{{ $product->category->name }}</td>
+                                        <td>{{ $product->brand->name }}</td>
+                                        <td>
+                                            @if( $product->status == 1)
+                                                <span class="badge badge-success">Active</span>
                                             @else
-                                            <img src="{{ asset('backend/img/categories/' .$category->image )}}"
-                                                width="30px" alt="">
+                                                <span class="badge badge-danger">InActive</span>
                                             @endif
                                         </td>
+                                        <td>{{ $product->price }} BDT</td>
                                         <td>
-                                            @if( $category->parent_id == 0 )
-                                                <span class="badge badge-info">Primary Category </span>                                                
+                                            @if( $product->offer_price == NULL)
+                                                <span class="badge badge-info">N/A</span>
                                             @else
-                                            {{ $category->parent->name }}
+                                                <span class="badge badge-danger">{{$product->offer_price}}</span>
                                             @endif
                                         </td>
+                                        <td>{{ $product->quantity }} Pcs</td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="{{ route('category.edit', $category->id) }}"
+                                                <a href="{{ route('product.edit', $product->id) }}"
                                                     class="btn btn-primary btn-sm">Update</a>
                                                 <a href="" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#deleteBrand{{ $category->id}}">Delete</a>
+                                                    data-target="#deleteProduct{{ $product->id}}">Delete</a>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="deleteBrand{{ $category->id }}"
+                                                <div class="modal fade" id="deleteProduct{{ $product->id }}"
                                                     tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">Do you
-                                                                    confirm to delete this Category?</h5>
+                                                                    confirm to delete this product?</h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
@@ -95,7 +110,7 @@
                                                             </div>
                                                             <div class="modal-body text-center">
                                                                 <form
-                                                                    action="{{ route('category.destroy',$category->id)}}"
+                                                                    action="{{ route('product.destroy',$product->id)}}"
                                                                     method="post">
                                                                     @csrf
                                                                     <div class="btn-group">
@@ -113,9 +128,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @php
-                                    $i++;
-                                    @endphp
+                                    @php  $i++;  @endphp
                                     @endforeach
                                 </tbody>
                             </table>

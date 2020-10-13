@@ -38,7 +38,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-responsive-md">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">#Sl.</th>
